@@ -95,6 +95,11 @@ border: 1px solid #0099FF;
   opacity: 0.7;
   border-radius: 50%;
 }
+
+.landing-image {
+  background-image: url('../public/16845.jpg') !important;
+  background-size: cover !important;
+}
 /* 
 
 .App {

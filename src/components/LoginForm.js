@@ -25,7 +25,7 @@ class LoginForm extends Component {
                     if(responseUsername == username && responsePassword == password){
                       await localStorage.setItem('session', btoa(responseUsername));
                       this.props.userHasAuthenticated(true);
-                      this.props.history.push('/');
+                      this.props.history.push('/home');
                     }else{
                       this.setWarning('Invalid Username Or Password');
                     }
@@ -61,12 +61,12 @@ class LoginForm extends Component {
           <div className = 'landing-image'>
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
               <Grid.Column style={{ maxWidth: 450 }}>
-                <Header as='h2' color='grey' textAlign='center'>
-                  {/* <Image src='/logo.png' />  */}
+                {/* <Header as='h2' color='black' textAlign='center'>
                   Log-in to your account
-                </Header>
+                </Header> */}
                 <Form size='large'>
                   <Segment stacked>
+                    {/* <h1></h1> */}
                     <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' value={this.state.username} onChange={this.setUserName.bind(this)} />
                     <Form.Input
                       fluid

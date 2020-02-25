@@ -1,6 +1,6 @@
 
 .landing-image {
-  background-image: url('../public/11806.jpg') !important;
+  background-image: url('../public/698599.jpg') !important;
   background-size: cover !important;
 }
 
@@ -41,6 +41,10 @@ a {
   color: #777;
 }
 
+.content{
+  padding-left: 259px;
+  font-size: initial;
+}
 /* 
 
 .App {

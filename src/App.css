@@ -1,11 +1,15 @@
 
 .landing-image {
-  background-image: url('../public/16845.jpg') !important;
+  background-image: url('../public/11806.jpg') !important;
   background-size: cover !important;
 }
 
 h3 {
   text-align: center;
+}
+
+.background{
+  background-image: url('../public/16845.jpg') !important;
 }
 
 input {

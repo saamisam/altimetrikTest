@@ -19,6 +19,10 @@ export class Home extends Component {
         this.refs.search.focus();
     }
     
+    getDetails(){
+        
+    }
+
     handleChange() {
         this.setState({
             searchString: this.refs.search.value
@@ -58,7 +62,7 @@ export class Home extends Component {
         // }
     
         return (
-            <div>
+            <div className='background'>
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
 
@@ -72,7 +76,7 @@ export class Home extends Component {
                         <ul>
                             {this.state.planets.map(l => {
                             return (
-                                <li>
+                                <li onClick={this.getDetails.bind(this)}>
                                 {l.name} 
                                 {/* <a href="#">{l.population}</a> */}
                                 </li>

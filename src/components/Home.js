@@ -1,68 +1,89 @@
 import React, { Component } from 'react'
-import { Search, Grid, Header, Segment } from 'semantic-ui-react'
 import axios from '../config/axios'
-const initialState = { isLoading: false, results: [], value: '' }
-import _ from 'lodash'
+import { Grid } from 'semantic-ui-react'
 
-export default class Home extends Component {
-    state = initialState
+export class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          searchString: "",
+          planets: []
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-    handleResultSelect = (e, { result }) => this.setState({ value: result.title })
-  
-    handleSearchChange = (e, { value }) => {
+    componentDidMount() {
+        // this.setState({
+        //   users: users
+        // });
+        this.refs.search.focus();
+    }
     
-        console.log('value', value);
-
-        this.setState({ isLoading: true, value })
-    
+    handleChange() {
+        this.setState({
+            searchString: this.refs.search.value
+        });
         setTimeout(async() => {
-            if (this.state.value.length < 1) return this.setState(initialState)
-            
-            await axios.get(`planets/?search=${value}`).then((data)=>{
+            // if (this.state.value.length < 1) return this.setState(initialState)
+            let searchString = this.state.searchString;
+            await axios.get(`planets/?search=${searchString}`).then((data)=>{
+                data = data['data']['results'];
                 console.log('data', data);
+                let searchArray = [];
+                for(let i=0; i<data.length; i++){
+                    let searchData = {};
+                    searchData['name'] = data[i]['name'];
+                    searchData['population'] = data[i]['population']; 
+                    // searchData['price'] = data[i]['population']
+                    searchArray.push(searchData);
+                }
+                console.log('search', searchArray);
                 this.setState({
                     isLoading: false,
-                    results: data
+                    planets: searchArray
                 })
             })
         }, 300)
+
     }
-  
 
     render() {
-        const { isLoading, value, results } = this.state
+        // let _users = this.state.planets;
+        // let search = this.state.searchString.trim().toLowerCase();
+    
+        // if (search.length > 0) {
+        //   _users = _users.filter(function(user) {
+        //     return user.name.toLowerCase().match(search);
+        //   });
+        // }
+    
         return (
             <div>
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                    <Grid>
-                        <Grid.Column width={6}>
-                        <Search
-                            loading={isLoading}
-                            // onResultSelect={this.handleResultSelect}
-                            onSearchChange={this.handleSearchChange}
-                            results={results}
-                            value={value}
-                            {...this.props}
+
+                        <input
+                            type="text"
+                            value={this.state.searchString}
+                            ref="search"
+                            onChange={this.handleChange}
+                            placeholder=""
                         />
-                        </Grid.Column>
-                        {/* <Grid.Column width={10}>
-                        <Segment>
-                            <Header>State</Header>
-                            <pre style={{ overflowX: 'auto' }}>
-                            {JSON.stringify(this.state, null, 2)}
-                            </pre>
-                            <Header>Options</Header>
-                            <pre style={{ overflowX: 'auto' }}>
-                            {JSON.stringify(source, null, 2)}
-                            </pre>
-                        </Segment>
-                        </Grid.Column> */}
-                    </Grid>
-                
+                        <ul>
+                            {this.state.planets.map(l => {
+                            return (
+                                <li>
+                                {l.name} 
+                                {/* <a href="#">{l.population}</a> */}
+                                </li>
+                            );
+                            })}
+                        </ul>
                     </Grid.Column>
                 </Grid>
             </div>
         )
     }
 }
+
+export default Home
